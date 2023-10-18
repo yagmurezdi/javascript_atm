@@ -1,0 +1,136 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div> 
+        <script>
+            console.log("-------------Hosgeldiniz-----------");
+        let hesap = 10000;
+        let vadeliHesap = 0;
+        let baskasininHesabi = 300;
+        let sayac = 0;
+        let sifreGirildi = false;
+        
+        while (true) {
+            if (!sifreGirildi) {
+                const sifre = prompt("Şifrenizi Giriniz");
+                if (sifre !== "1234") {
+                    console.log("Şifre yanlış");
+                    sayac++;
+                    if (sayac === 3) {
+                        console.log("Kartınız bloke oldu.");
+                        break;
+                    }
+                } else {
+                    console.log("Şifre doğru girildi");
+                    sifreGirildi = true;
+                }
+            } else {
+                const birinciDeger = parseInt(prompt("1-Hesaba Para Yatırma\n2-Para Çekme\n3-Bakiye Sorgulama\n4-Havale-Eft\n5-Vadeli Hesap İşlemleri\n6-Kredi İşlemleri\n7-Çıkış\nLütfen Yapmak İstediğiniz İşlemi Seçiniz"));
+        
+                if (birinciDeger === 1) {
+                    const yatirilanPara = parseInt(prompt("Lütfen Yatırmak İstediğiniz Miktarı Giriniz"));
+                    if (yatirilanPara > 0) {
+                        hesap += yatirilanPara;
+                        console.log("Yatırılan Miktar:", yatirilanPara);
+                        console.log("Toplam Hesap Bakiyeniz:", hesap);
+                    } else {
+                        console.log("Hatalı Giriş");
+                    }
+                } else if (birinciDeger === 2) {
+                    const hizliCekim = parseInt(prompt("1-20 Tl\n2-50 Tl\n3-100 Tl\n4-200 Tl\n5-500 Tl\n6-Diğer Tutar\n"));
+                    if (hizliCekim === 1) {
+                        hesap -= 20;
+                        console.log("Çekilen Miktar:", 20);
+                        console.log("Hesabınızda Kalan Bakiye:", hesap);
+                    } else if (hizliCekim === 2) {
+                        hesap -= 50;
+                        console.log("Çekilen Miktar:", 50);
+                        console.log("Hesabınızda Kalan Bakiye:", hesap);
+                    } else if (hizliCekim === 3) {
+                        hesap -= 100;
+                        console.log("Çekilen Miktar:", 100);
+                        console.log("Hesabınızdaki Kalan Bakiye:", hesap);
+                    } else if (hizliCekim === 4) {
+                        hesap -= 200;
+                        console.log("Çekilen Miktar:", 200);
+                        console.log("Hesabınızdaki Kalan Bakiye:", hesap);
+                    } else if (hizliCekim === 5) {
+                        hesap -= 500;
+                        console.log("Çekilen Miktar:", 500);
+                        console.log("Hesabınızdaki Kalan Bakiye:", hesap);
+                    } else if (hizliCekim === 6) {
+                        const girilenMiktar = parseInt(prompt("Lütfen Çekmek İstediğiniz Miktarı Giriniz"));
+                        if (girilenMiktar > 0) {
+                            hesap -= girilenMiktar;
+                            console.log("Çekilen miktar:", girilenMiktar);
+                            console.log("Hesabınızda Kalan Bakiye:", hesap);
+                        } else {
+                            console.log("Hatalı Giriş");
+                        }
+                    } else {
+                        console.log("Hatalı Giriş");
+                    }
+                } else if (birinciDeger === 3) {
+                    console.log("Bakiye Sorgulama");
+                    console.log("Hesabınızdaki Para Miktarı:", hesap);
+                } else if (birinciDeger === 4) {
+                    const hesapNo = prompt("Havale Yapmak İstediğiniz Hesap No girin");
+                    if (hesapNo === "12345678") {
+                        console.log("Hesabın Sahibinin İsmi: Ayşe");
+                        const havaleMiktari = parseInt(prompt("Lütfen Miktar Gir"));
+                        if (havaleMiktari > 0) {
+                            hesap -= havaleMiktari;
+                            console.log("Aysenin Hesabına:", havaleMiktari, "Tl Gönderilmiştir");
+                            console.log("Kalan Bakiyeniz:", hesap);
+                        } else {
+                            console.log("Hatalı Giriş");
+                        }
+                    } else {
+                        console.log("Hatalı Giriş");
+                    }
+                } else if (birinciDeger === 5) {
+                    const vadeliMiktar = parseInt(prompt("Lütfen Aktarılcak Miktarı Giriniz:"));
+                    hesap -= vadeliMiktar;
+                    vadeliHesap += vadeliMiktar;
+                    const gun = parseInt(prompt("Vadeli Gün Sayısını Giriniz:"));
+                    const faizOrani = 0.10;
+                    const toplamFaiz = gun * faizOrani;
+                    vadeliHesap = (vadeliMiktar * toplamFaiz) + vadeliMiktar;
+                    console.log(vadeliHesap);
+                } else if (birinciDeger === 6) {
+                    const krediMiktari = parseInt(prompt("Çekmek istediğiniz kredi miktarını giriniz:"));
+                    if (krediMiktari > 0) {
+                        const krediHesabi = hesap + vadeliHesap;
+                        console.log("Krediniz onaylanmıştır \n Yeni bakiyeniz: ", krediHesabi);
+                        if (krediHesabi >= krediMiktari) {
+                            hesap += krediMiktari;
+                            console.log(krediMiktari + " Tl Krediniz İşleme Alınmıştır");
+                            console.log("Yeni Bakiyeniz:", hesap);
+                        } else {
+                            console.log("Kredi miktarı hesabınızda yeterli bakiye bulunmadığı için kredi çekme işlemi gerçekleştirilemedi.");
+                        }
+                    } else {
+                        console.log("Hatalı Giriş");
+                    }
+                } else if (birinciDeger === 7) {
+                    console.log("Çıkış yapılıyor.");
+                    break;
+                } else {
+                    console.log("Hatalı Giriş");
+                }
+            }
+        }
+        </script>
+    </div>
+</body>
+</html>
